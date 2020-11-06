@@ -1,7 +1,14 @@
 import express from 'express';
-import ProductController from '../controllers/product.js';
+import container from '../container.js';
+import productValidations from '../validations/productValidation.js';
+
 const router = express.Router();
 
-router.get('/product', ProductController.getProducts);
-router.get('/product/:id', ProductController.getProduct);
+router.get('/product', (req, res) => {
+  container.cradle.productController.getProducts(req, res);
+});
+router.get('/product/:id', productValidations, (req, res, next) => {
+  container.cradle.productController.getProduct(req, res, next);
+});
+
 export default router;

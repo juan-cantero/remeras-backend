@@ -3,6 +3,7 @@ import cors from 'cors';
 import routes from './routes/routes.js';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import { notFound, errorHandler } from './middleware/errorHandler.js';
 import colors from 'colors';
 
 const app = express();
@@ -14,7 +15,11 @@ app.use(
     origin: 'http://localhost:3000',
   })
 );
+
 app.use('/api', routes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
