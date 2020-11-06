@@ -1,14 +1,31 @@
-import products from '../data/products.js';
+import { validationResult } from 'express-validator';
+import passErrorToHandler from '../helpers/handleError.js';
 
 class ProductController {
-  static getProducts(req, res) {
+  constructor({ productService }) {
+    this.productService = productService;
+  }
+  async getProducts(req, res) {
+    const products = await this.productService.getProducts();
+
     res.json(products);
   }
 
-  static getProduct(req, res) {
+  async getProduct(req, res, next) {
     const id = req.params.id;
-    const product = products.find((product) => product._id === id);
-    res.json(product);
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.json(errors);
+    }
+
+    try {
+      const product = await this.productService.getProduct(id);
+
+      res.status(200).json({ product });
+    } catch (err) {
+      passErrorToHandler(err, next);
+    }
   }
 }
 

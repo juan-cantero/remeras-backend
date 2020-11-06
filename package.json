@@ -5,15 +5,20 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server/server"
+    "start": "nodemon server/server",
+    "data:import": "node server/seeder",
+    "data:destroy": "node server/seeder -d"
   },
   "author": "juanqui",
   "license": "ISC",
   "dependencies": {
+    "awilix": "^4.2.7",
+    "bcrypt": "^5.0.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-validator": "^6.6.1",
     "mongoose": "^5.10.12"
   },
   "devDependencies": {
