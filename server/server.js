@@ -7,14 +7,9 @@ import { notFound, errorHandler } from './middleware/errorHandler.js';
 import colors from 'colors';
 
 const app = express();
+app.use(cors());
 dotenv.config();
 connectDB();
-
-app.use(
-  cors({
-    origin: 'http://localhost:3000',
-  })
-);
 
 app.use('/api', routes);
 

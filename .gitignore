@@ -114,3 +114,11 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+.VSCodeCounter/2020-11-07_16-10-27/details.md
+
+.VSCodeCounter/2020-11-07_16-10-27/results.csv
+
+.VSCodeCounter/2020-11-07_16-10-27/results.md
+
+.VSCodeCounter/2020-11-07_16-10-27/results.txt

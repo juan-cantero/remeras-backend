@@ -23,11 +23,11 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    inStock: {
-      type: Boolean,
-      default: true,
+    stock: {
+      type: Object,
       required: true,
     },
+
     forGenre: {
       type: String,
       enum: ['hombre', 'mujer', 'unisex'],
