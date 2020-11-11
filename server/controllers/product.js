@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import passErrorToHandler from '../helpers/handleError.js';
+import passErrorToHandler from '../utils/errors.js';
 
 class ProductController {
   constructor({ productService }) {

@@ -8,6 +8,7 @@ import colors from 'colors';
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 dotenv.config();
 connectDB();
 
