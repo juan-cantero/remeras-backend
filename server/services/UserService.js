@@ -6,9 +6,7 @@ class UserService {
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        const error = new Error('There is not such a user with that email');
-        error.statusCode = 404;
-        throw error;
+        return null;
       }
       return user;
     } catch (error) {
@@ -21,7 +19,26 @@ class UserService {
   }
 
   async findUserById(id) {
-    return await User.findById(id).exec();
+    try {
+      return await User.findById(id).exec();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async createUser(dataForCreateUser) {
+    const user = new User(dataForCreateUser);
+    try {
+      const userDb = await User.create(user);
+      if (!user) {
+        const error = new Error('could create user');
+        error.statusCode = 500;
+        throw error;
+      }
+      return userDb;
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
