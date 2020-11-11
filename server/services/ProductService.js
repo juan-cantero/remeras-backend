@@ -16,7 +16,6 @@ class ProductService {
       const product = await Product.findById(id).exec();
 
       if (!product) {
-        console.log('erorrorororor');
         const error = new Error('product not found');
         error.statusCode = 404;
         throw error;
