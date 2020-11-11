@@ -1,17 +1,19 @@
 {
-  "name": "proshop-backend",
+  "name": "remeras-backend",
   "version": "1.0.0",
-  "description": "proshop backend",
+  "description": "remeras backend",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "nodemon server/server",
+    "test": "jest",
     "data:import": "node server/seeder",
     "data:destroy": "node server/seeder -d"
   },
   "author": "juanqui",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^26.0.15",
     "awilix": "^4.2.7",
     "bcrypt": "^5.0.0",
     "colors": "^1.4.0",
@@ -19,10 +21,14 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
     "mongoose": "^5.10.12"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "nodemon": "^2.0.6"
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.6",
+    "sinon": "^9.2.1"
   }
 }
