@@ -20,10 +20,10 @@ class UserController {
     const { email, password } = req.body;
 
     try {
-      const user = this.userService.findUserByEmail(email);
+      const user = await this.userService.findUserByEmail(email);
       if (
         user &&
-        (await this.userService.matchPassword(user.password, password))
+        (await this.userService.matchPassword(password, user.password))
       ) {
         const token = generateToken(user._id);
         return res.status(200).json({
@@ -39,7 +39,7 @@ class UserController {
         throw error;
       }
     } catch (error) {
-      return passErrorToHandler(error, next);
+      passErrorToHandler(error, next);
     }
   }
 
@@ -50,6 +50,42 @@ class UserController {
     let user = req.user;
     user = _.pick(user, '_id', 'name', 'email');
     res.status(200).json({ user });
+  }
+
+  //@description update user profile
+  //@route Get api/user/profile
+  //@access private
+  async updateUserProfile(req, res, next) {
+    let dbUser;
+    try {
+      dbUser = await this.userService.findUserById(req.user._id);
+      if (dbUser) {
+        dbUser.name = req.body.name || dbUser.name;
+        dbUser.email = req.body.email || dbUser.email;
+        if (req.body.password) {
+          let encryptedPassword = await encryptPassword(req.body.password);
+          dbUser.password = encryptedPassword;
+        }
+      }
+    } catch (error) {
+      return passErrorToHandler(error, next);
+    }
+
+    try {
+      let updatedUser = await dbUser.save();
+
+      let token = generateToken(updatedUser._id);
+
+      res.status(200).json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token: token,
+      });
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
   }
 
   //@description register user

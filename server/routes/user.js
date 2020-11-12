@@ -15,4 +15,8 @@ router.get('/profile', verifyToken, (req, res) => {
   container.cradle.userController.getProfile(req, res);
 });
 
+router.put('/profile', verifyToken, (req, res, next) => {
+  container.cradle.userController.updateUserProfile(req, res, next);
+});
+
 export default router;

@@ -14,7 +14,7 @@ class UserService {
     }
   }
 
-  async matchPassword(userPassword, enteredPassword) {
+  async matchPassword(enteredPassword, userPassword) {
     return await bcrypt.compare(enteredPassword, userPassword);
   }
 
