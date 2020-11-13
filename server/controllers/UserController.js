@@ -48,8 +48,7 @@ class UserController {
   //@access private
   async getProfile(req, res) {
     let user = req.user;
-    user = _.pick(user, '_id', 'name', 'email');
-    res.status(200).json({ user });
+    res.status(200).json({ _id: user._id, name: user.name, email: user.email });
   }
 
   //@description update user profile
