@@ -10,7 +10,24 @@ class OrderController {
     this.orderService = orderService;
   }
 
-  async getOrderById(req, res, next) {}
+  //@describe get order by id
+  //@route GET /api/orders/:id
+  //@access PRIVATE
+  async getOrderById(req, res, next) {
+    const orderId = req.params.id;
+
+    try {
+      const orderDb = await this.orderService.getOrderById(orderId);
+      if (!orderDb) {
+        const error = new Error('order not found');
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json(orderDb);
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
 
   //@describe add order
   //@route POST /api/orders
@@ -42,7 +59,7 @@ class OrderController {
     };
     try {
       const createdOrder = await this.orderService.createOrder(orderData);
-      res.status(201).json({ createdOrder });
+      res.status(201).json(createdOrder);
     } catch (error) {
       passErrorToHandler(error, next);
     }

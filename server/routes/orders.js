@@ -7,4 +7,8 @@ router.post('/', verifyToken, (req, res, next) => {
   container.cradle.orderController.addOrder(req, res, next);
 });
 
+router.get('/:id', verifyToken, (req, res, next) => {
+  container.cradle.orderController.getOrderById(req, res, next);
+});
+
 export default router;
