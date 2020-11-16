@@ -64,6 +64,38 @@ class OrderController {
       passErrorToHandler(error, next);
     }
   }
+
+  //@describe update order payment
+  //@PUT /api/orders/:id/pay
+  //@access private
+  async updateOrderToPaid(req, res, next) {
+    try {
+      const order = await this.orderService.getOrderById(req.params.id);
+      if (order) {
+        order.isPaid = true;
+        order.paidAt = Date.now();
+        order.paymentResult = req.body.paymentResult;
+        const updatedOrder = order.save();
+        res.status(200).json(updatedOrder);
+      }
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
+  //@description get the orders for a user
+  //@route GET api/orders/myorder
+  //@access PRIVATE
+  async getOrdersByUserId(req, res, next) {
+    const userId = req.user._id;
+
+    try {
+      const myOrders = await this.orderService.getOrdersByUserId(userId);
+      res.status(200).json(myOrders);
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
 }
 
 export default OrderController;

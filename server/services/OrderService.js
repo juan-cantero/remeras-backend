@@ -17,6 +17,14 @@ class OrderService {
       throw error;
     }
   }
+
+  async getOrdersByUserId(userId) {
+    try {
+      return await Order.find({ purchaserUser: userId });
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default OrderService;

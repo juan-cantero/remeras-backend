@@ -13,7 +13,7 @@ const products = [
     },
 
     forGenre: 'mujer',
-    price: 1000,
+    unit_price: 1000,
   },
   {
     name: 'besos-negra',
@@ -29,7 +29,7 @@ const products = [
     },
 
     forGenre: 'mujer',
-    price: 1000,
+    unit_price: 1000,
   },
   {
     name: 'corazon',
@@ -44,7 +44,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 1000,
+    unit_price: 1000,
   },
   {
     name: 'frase-cortazar-blanca',
@@ -59,7 +59,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 1200,
+    unit_price: 1200,
   },
   {
     name: 'frase-cortazar-negra',
@@ -74,7 +74,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 1200,
+    unit_price: 1200,
   },
 
   {
@@ -90,7 +90,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'hombre',
-    price: 1200,
+    unit_price: 1200,
   },
 
   {
@@ -106,7 +106,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 2000,
+    unit_price: 2000,
   },
   {
     name: 'rolling-blanca',
@@ -121,7 +121,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 2000,
+    unit_price: 2000,
   },
   {
     name: 'ogi-blanca',
@@ -136,7 +136,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'hombre',
-    price: 2000,
+    unit_price: 2000,
   },
 
   {
@@ -152,7 +152,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'hombre',
-    price: 2000,
+    unit_price: 2000,
   },
   {
     name: 'todo-cambia-negra',
@@ -167,7 +167,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 2000,
+    unit_price: 2000,
   },
   {
     name: 'todo-cambia-blanca',
@@ -182,7 +182,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 2000,
+    unit_price: 2000,
   },
   {
     name: 'wild-blanca',
@@ -197,7 +197,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 3000,
+    unit_price: 3000,
   },
   {
     name: 'wild-negra',
@@ -212,7 +212,7 @@ const products = [
       xl: 10,
     },
     forGenre: 'mujer',
-    price: 4000,
+    unit_price: 4000,
   },
 ];
 

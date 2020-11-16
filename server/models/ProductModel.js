@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema(
       enum: ['hombre', 'mujer', 'unisex'],
       required: true,
     },
-    price: {
+    unit_price: {
       type: Number,
       required: true,
     },
