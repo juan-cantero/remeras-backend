@@ -12,11 +12,11 @@ router.get('/myorders', verifyToken, (req, res, next) => {
   container.cradle.orderController.getOrdersByUserId(req, res, next);
 });
 
-router.get('/:id', verifyToken, validateIdParam, (req, res, next) => {
+router.get('/:id', validateIdParam, verifyToken, (req, res, next) => {
   container.cradle.orderController.getOrderById(req, res, next);
 });
 
-router.put('/:id/pay', verifyToken, validateIdParam, (req, res, next) => {
+router.put('/:id/pay', validateIdParam, verifyToken, (req, res, next) => {
   container.cradle.orderController.updateOrderToPaid(req, res, next);
 });
 

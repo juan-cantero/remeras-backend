@@ -18,7 +18,7 @@ class OrderController {
     const orderId = req.params.id;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
 
     try {
@@ -76,7 +76,7 @@ class OrderController {
   async updateOrderToPaid(req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
     try {
       const order = await this.orderService.getOrderById(req.params.id);

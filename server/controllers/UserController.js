@@ -3,6 +3,7 @@ import UserService from '../services/UserService.js';
 import generateToken from '../utils/generateToken.js';
 import _ from 'lodash/object.js';
 import { encryptPassword } from '../utils/encription.js';
+import { validationResult } from 'express-validator';
 
 class UserController {
   /**
@@ -132,7 +133,11 @@ class UserController {
   //@ROUTE PUT /user/:id
   //@access private/admin
   async deleteUser(req, res, next) {
-    const userId = req.params.userId;
+    const userId = req.params.id;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors);
+    }
 
     try {
       const deletedUser = await this.userService.deleteUserById(userId);

@@ -1,6 +1,7 @@
 import express from 'express';
 import container from '../container.js';
 import { verifyToken, isAdmin } from '../middleware/authMiddleware.js';
+import validateIdParam from '../validations/idValiation.js';
 const router = express.Router();
 
 router.route('/').post((req, res, next) => {
@@ -22,5 +23,15 @@ router.get('/profile', verifyToken, (req, res) => {
 router.put('/profile', verifyToken, (req, res, next) => {
   container.cradle.userController.updateUserProfile(req, res, next);
 });
+
+router.delete(
+  '/:id',
+  validateIdParam,
+  verifyToken,
+  isAdmin,
+  (req, res, next) => {
+    container.cradle.userController.deleteUser(req, res, next);
+  }
+);
 
 export default router;

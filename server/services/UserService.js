@@ -43,7 +43,8 @@ class UserService {
 
   async deleteUserById(id) {
     try {
-      const deletedUser = await User.findByIdAndRemove(id);
+      const userToBeDeleted = await User.findById(id);
+      const deletedUser = await userToBeDeleted.remove();
       return deletedUser;
     } catch (error) {
       throw error;
