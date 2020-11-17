@@ -1,3 +1,4 @@
+import { validationResult } from 'express-validator';
 import OrderService from '../services/OrderService.js';
 import passErrorToHandler from '../utils/errors.js';
 
@@ -15,6 +16,10 @@ class OrderController {
   //@access PRIVATE
   async getOrderById(req, res, next) {
     const orderId = req.params.id;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json(errors);
+    }
 
     try {
       const orderDb = await this.orderService.getOrderById(orderId);
@@ -69,6 +74,10 @@ class OrderController {
   //@PUT /api/orders/:id/pay
   //@access private
   async updateOrderToPaid(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json(errors);
+    }
     try {
       const order = await this.orderService.getOrderById(req.params.id);
       if (order) {

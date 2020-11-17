@@ -1,6 +1,7 @@
 import express from 'express';
 import container from '../container.js';
-import verifyToken from '../middleware/verifyToken.js';
+import { verifyToken } from '../middleware/authMiddleware.js';
+import validateIdParam from '../validations/idValiation.js';
 const router = express.Router();
 
 router.post('/', verifyToken, (req, res, next) => {
@@ -11,11 +12,11 @@ router.get('/myorders', verifyToken, (req, res, next) => {
   container.cradle.orderController.getOrdersByUserId(req, res, next);
 });
 
-router.get('/:id', verifyToken, (req, res, next) => {
+router.get('/:id', verifyToken, validateIdParam, (req, res, next) => {
   container.cradle.orderController.getOrderById(req, res, next);
 });
 
-router.put('/:id/pay', verifyToken, (req, res, next) => {
+router.put('/:id/pay', verifyToken, validateIdParam, (req, res, next) => {
   container.cradle.orderController.updateOrderToPaid(req, res, next);
 });
 

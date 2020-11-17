@@ -3,11 +3,14 @@ import container from '../container.js';
 import passErrorToHandler from '../utils/errors.js';
 
 const verifyToken = async (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ error: 'not token' });
+  }
+
   let token;
 
   const tokenWasSendAndStartsWithBearer =
     req.headers.authorization && req.headers.authorization.startsWith('Bearer');
-
   if (tokenWasSendAndStartsWithBearer) {
     try {
       token = req.headers.authorization.split(' ')[1];
@@ -22,4 +25,12 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-export default verifyToken;
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res.status(401).json({ error: 'This user does not have admin rights' });
+  }
+};
+
+export { verifyToken, isAdmin };

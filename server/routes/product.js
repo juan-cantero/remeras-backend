@@ -1,13 +1,13 @@
 import express from 'express';
 import container from '../container.js';
-import productValidations from '../validations/productValidation.js';
+import validateIdParam from '../validations/idValiation.js';
 
 const router = express.Router();
 
 router.get('/product', (req, res) => {
   container.cradle.productController.getProducts(req, res);
 });
-router.get('/product/:id', productValidations, (req, res, next) => {
+router.get('/product/:id', validateIdParam, (req, res, next) => {
   container.cradle.productController.getProduct(req, res, next);
 });
 

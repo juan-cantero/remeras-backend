@@ -127,6 +127,32 @@ class UserController {
       passErrorToHandler(error, next);
     }
   }
+
+  //@description delete user
+  //@ROUTE PUT /user/:id
+  //@access private/admin
+  async deleteUser(req, res, next) {
+    const userId = req.params.userId;
+
+    try {
+      const deletedUser = await this.userService.deleteUserById(userId);
+      res.status(200).json(deletedUser);
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
+  //@description get all the users
+  //@ROUTE GET /user/list
+  //@access private/admin
+  async getAllUsers(req, res, next) {
+    try {
+      const users = await this.userService.getAllUsers();
+      res.status(200).json(users);
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
 }
 
 export default UserController;

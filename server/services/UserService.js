@@ -40,6 +40,23 @@ class UserService {
       throw error;
     }
   }
+
+  async deleteUserById(id) {
+    try {
+      const deletedUser = await User.findByIdAndRemove(id);
+      return deletedUser;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllUsers() {
+    try {
+      return await User.find({}).exec();
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default UserService;
