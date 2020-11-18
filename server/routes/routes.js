@@ -7,7 +7,7 @@ import mercadoPagoRoutes from './mercadopago.js';
 const routes = express.Router();
 
 routes.use('/user', userRoutes);
-routes.use(productRoutes);
+routes.use('/product', productRoutes);
 routes.use('/orders', orderRoutes);
 routes.use(mercadoPagoRoutes);
 
