@@ -25,6 +25,43 @@ class ProductService {
       throw error;
     }
   }
+
+  async createProduct(productInfo) {
+    try {
+      const product = new Product(productInfo);
+      return await product.save();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async updateProduct(id, productUpdate) {
+    try {
+      const product = await Product.findById(id);
+
+      product.name = productUpdate.name;
+      product.image = productUpdate.image;
+      product.description = productUpdate.description;
+      product.category = productUpdate.category;
+      product.stock = productUpdate.stock;
+      product.forGenre = productUpdate.forGenre;
+      product.unit_price = productUpdate.unit_price;
+
+      const productSaved = await product.save();
+      return productSaved;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteProduct(id) {
+    try {
+      const deletedProduct = await Product.findByIdAndRemove(id).exec();
+      return deletedProduct;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ProductService;

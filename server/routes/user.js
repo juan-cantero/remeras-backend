@@ -24,6 +24,14 @@ router.put('/profile', verifyToken, (req, res, next) => {
   container.cradle.userController.updateUserProfile(req, res, next);
 });
 
+router.get('/:id', validateIdParam, verifyToken, isAdmin, (req, res, next) => {
+  container.cradle.userController.getUserById(req, res, next);
+});
+
+router.put('/:id', validateIdParam, verifyToken, isAdmin, (req, res, next) => {
+  container.cradle.userController.updateUser(req, res, next);
+});
+
 router.delete(
   '/:id',
   validateIdParam,

@@ -129,8 +129,52 @@ class UserController {
     }
   }
 
+  //@description get user by id
+  //@ROUTE GET /api/user/:id
+  //@access private/admin
+  async getUserById(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors);
+    }
+    const id = req.params.id;
+
+    try {
+      let userDb = await this.userService.findUserById(id);
+      userDb = _.pick(userDb, ['_id', 'name', 'email', 'isAdmin']);
+      res.status(200).json(userDb);
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
+  //@description update user
+  // @ROUTE PUT /api/user/:id
+  //@access PRIVATE/ADMIN
+  async updateUser(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors);
+    }
+    const id = req.params.id;
+
+    try {
+      const dbUser = await this.userService.findUserById(id);
+      if (dbUser) {
+        dbUser.name = req.body.name || dbUser.name;
+        dbUser.email = req.body.email || dbUser.email;
+        dbUser.isAdmin = req.body.isAdmin;
+        let updatedUser = await dbUser.save();
+        updatedUser = _.pick(updatedUser, ['_id', 'name', 'email', 'isAdmin']);
+        res.status(200).json(updatedUser);
+      }
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
   //@description delete user
-  //@ROUTE PUT /user/:id
+  //@ROUTE DELETE /api/user/:id
   //@access private/admin
   async deleteUser(req, res, next) {
     const userId = req.params.id;

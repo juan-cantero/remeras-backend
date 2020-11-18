@@ -1,6 +1,6 @@
 import awilix, { asClass } from 'awilix';
 import OrderController from './controllers/OrderController.js';
-import ProductController from './controllers/product.js';
+import ProductController from './controllers/ProductController.js';
 import UserController from './controllers/UserController.js';
 import OrderService from './services/OrderService.js';
 import ProductService from './services/ProductService.js';
