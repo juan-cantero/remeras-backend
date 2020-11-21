@@ -30,4 +30,8 @@ router.delete(
   }
 );
 
+router.delete('/list/:uid', verifyToken, isAdmin, (req, res, next) => {
+  container.cradle.productController.deleteAllProductsForUser(req, res, next);
+});
+
 export default router;

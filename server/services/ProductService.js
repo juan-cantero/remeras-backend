@@ -62,6 +62,15 @@ class ProductService {
       throw error;
     }
   }
+
+  async deleteAllProductsForUser(id) {
+    try {
+      const deletedProducts = await Product.deleteMany({ creator: id }).exec();
+      return deletedProducts;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ProductService;

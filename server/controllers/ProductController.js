@@ -129,6 +129,24 @@ class ProductController {
       passErrorToHandler(error, next);
     }
   }
+
+  //@description delete products by user id
+  //@ROUTE  DELETE /api/product/list/:uid
+  //@access PRIVATE/ADMIN
+  async deleteAllProductsForUser(req, res, next) {
+    const uid = req.params.uid;
+
+    try {
+      const deletedProducts = await this.productService.deleteAllProductsForUser(
+        uid
+      );
+      res
+        .status(200)
+        .json({ message: 'products deleted successfuly', deletedProducts });
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
 }
 
 export default ProductController;
