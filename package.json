@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    
-    "start": "node server/server",
+    "start": "node server/server.js",
     "test": "jest",
     "data:import": "node server/seeder",
     "data:destroy": "node server/seeder -d"
