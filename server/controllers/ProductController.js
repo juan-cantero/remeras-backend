@@ -1,5 +1,6 @@
-import { validationResult } from 'express-validator';
 import passErrorToHandler from '../utils/errors.js';
+import pkg from 'express-validator';
+const { validationResult } = pkg;
 
 class ProductController {
   constructor({ productService }) {

@@ -3,8 +3,8 @@ import UserService from '../services/UserService.js';
 import generateToken from '../utils/generateToken.js';
 import _ from 'lodash/object.js';
 import { encryptPassword } from '../utils/encription.js';
-import { validationResult } from 'express-validator';
-
+import pkg from 'express-validator';
+const { validationResult } = pkg;
 class UserController {
   /**
    *
