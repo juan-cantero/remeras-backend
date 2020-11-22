@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    //node for heroku
+    
     "start": "node server/server",
     "test": "jest",
     "data:import": "node server/seeder",
