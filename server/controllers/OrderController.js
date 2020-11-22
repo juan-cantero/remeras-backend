@@ -1,4 +1,5 @@
-import { validationResult } from 'express-validator';
+import pkg from 'express-validator';
+const { validationResult } = pkg;
 import OrderService from '../services/OrderService.js';
 import passErrorToHandler from '../utils/errors.js';
 
