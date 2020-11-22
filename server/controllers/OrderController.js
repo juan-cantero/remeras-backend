@@ -34,6 +34,18 @@ class OrderController {
     }
   }
 
+  //@describe get all the orders
+  //@route GET /api/orders
+  //@access PRIVATE/ADMIN
+  async getOrders(req, res, next) {
+    try {
+      const orders = await this.orderService.getOrders();
+      res.status(200).json(orders);
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
   //@describe add order
   //@route POST /api/orders
   //@access PRIVATE
@@ -84,7 +96,28 @@ class OrderController {
         order.isPaid = true;
         order.paidAt = Date.now();
         order.paymentResult = req.body.paymentResult;
-        const updatedOrder = order.save();
+        const updatedOrder = await order.save();
+        res.status(200).json(updatedOrder);
+      }
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
+  //@describe update order payment
+  //@PUT /api/orders/:id/delivered
+  //@access PRIVATE/ADMIN
+  async updateOrderToDelivered(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors);
+    }
+    try {
+      const order = await this.orderService.getOrderById(req.params.id);
+      if (order) {
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
+        const updatedOrder = await order.save();
         res.status(200).json(updatedOrder);
       }
     } catch (error) {

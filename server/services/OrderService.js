@@ -9,6 +9,14 @@ class OrderService {
       throw error;
     }
   }
+
+  async getOrders() {
+    try {
+      return await Order.find({}).populate('User', 'id name').exec();
+    } catch (error) {
+      throw error;
+    }
+  }
   async createOrder(orderData) {
     const order = new Order(orderData);
     try {
