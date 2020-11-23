@@ -51,13 +51,7 @@ class MercadoPagoController {
       config
     );
 
-<<<<<<< HEAD
     res.status(200).json({ id, topic });
-=======
-    const { status, date_approved } = data;
-
-    res.status(200).json({ status, date_approved });
->>>>>>> master
   }
 }
 
