@@ -1,10 +1,21 @@
 import passErrorToHandler from '../utils/errors.js';
 import UserService from '../services/UserService.js';
-import generateToken from '../utils/generateToken.js';
+import generateToken, { generateResetToken } from '../utils/generateToken.js';
+import jwt from 'jsonwebtoken';
 import _ from 'lodash/object.js';
+import dotenv from 'dotenv';
+
 import { encryptPassword } from '../utils/encription.js';
+<<<<<<< HEAD
 import pkg from 'express-validator';
 const { validationResult } = pkg;
+=======
+import { validationResult } from 'express-validator';
+import User from '../models/UserModel.js';
+import MailService from '../services/MailService.js';
+dotenv.config();
+
+>>>>>>> master
 class UserController {
   /**
    *
@@ -39,6 +50,56 @@ class UserController {
         error.statusCode = 401;
         throw error;
       }
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
+  //@description send an email with link to reset password
+  //@route PUT api/user/forgotpassword
+  //@access public
+  async forgotPassword(req, res, next) {
+    const { email } = req.body;
+
+    try {
+      const user = await this.userService.findUserByEmail(email);
+      const token = generateResetToken(user._id);
+      user.resetLink = token;
+      const updatedUser = await user.save();
+      const info = await MailService.sendmail({
+        from: 'juanqui.cantero1989@gmail.com',
+        to: `${email}`,
+        subject: 'Ingresa en el link para resetear tu password',
+        html: `
+        <a href="http://localhost:3000/api/user/resetpassword">resetea tu password</a>
+        `,
+      });
+      res.status(200).json({ message: 'El email fue enviado', info });
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
+  }
+
+  //@description reset password
+  //@route PUT api/user/resetpassword
+  //@access private
+  async resetPassword(req, res, next) {
+    const { newPassword, resetLink } = req.body;
+
+    try {
+      const decoded = jwt.verify(resetLink, process.env.JWT_SECRET_RESET);
+
+      const user = await this.userService.findUserByCondition({ resetLink });
+      if (!user) {
+        const error = new Error('authorization error!!');
+        error.statusCode = 401;
+        throw error;
+      }
+      user.password = newPassword;
+      user.resetLink = '';
+      const savedUser = await user.save();
+      console.log(savedUser);
+      res.status(200).json({ message: 'your password has been changed' });
     } catch (error) {
       passErrorToHandler(error, next);
     }

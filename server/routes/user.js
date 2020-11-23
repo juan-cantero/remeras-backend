@@ -28,6 +28,14 @@ router.get('/:id', validateIdParam, verifyToken, isAdmin, (req, res, next) => {
   container.cradle.userController.getUserById(req, res, next);
 });
 
+router.put('/forgotpassword', (req, res, next) => {
+  container.cradle.userController.forgotPassword(req, res, next);
+});
+
+router.put('/resetpassword', (req, res, next) => {
+  container.cradle.userController.resetPassword(req, res, next);
+});
+
 router.put('/:id', validateIdParam, verifyToken, isAdmin, (req, res, next) => {
   container.cradle.userController.updateUser(req, res, next);
 });

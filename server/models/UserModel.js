@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+
+    resetLink: {
+      type: String,
+      default: '',
+    },
   },
   { timestamps: true }
 );
