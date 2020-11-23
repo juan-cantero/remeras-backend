@@ -58,6 +58,11 @@ class UserController {
 
     try {
       const user = await this.userService.findUserByEmail(email);
+      if (!user) {
+        const error = new Error('There is not user with that email');
+        error.statusCode = 400;
+        throw error;
+      }
       const token = generateResetToken(user._id);
       user.resetLink = token;
       const updatedUser = await user.save();
