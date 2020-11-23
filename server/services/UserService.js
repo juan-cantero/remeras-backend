@@ -6,7 +6,9 @@ class UserService {
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        return null;
+        const error = new Error('not user found');
+        error.status = 400;
+        throw error;
       }
       return user;
     } catch (error) {
