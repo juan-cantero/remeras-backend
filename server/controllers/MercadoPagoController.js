@@ -51,7 +51,7 @@ class MercadoPagoController {
       config
     );
 
-    res.status(200).json({ id, topic });
+    res.status(200).json({ data });
   }
 }
 

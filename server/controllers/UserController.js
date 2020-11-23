@@ -6,16 +6,11 @@ import _ from 'lodash/object.js';
 import dotenv from 'dotenv';
 
 import { encryptPassword } from '../utils/encription.js';
-<<<<<<< HEAD
-import pkg from 'express-validator';
-const { validationResult } = pkg;
-=======
 import { validationResult } from 'express-validator';
 import User from '../models/UserModel.js';
 import MailService from '../services/MailService.js';
 dotenv.config();
 
->>>>>>> master
 class UserController {
   /**
    *
