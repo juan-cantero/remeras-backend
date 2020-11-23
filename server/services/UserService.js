@@ -26,6 +26,14 @@ class UserService {
     }
   }
 
+  async findUserByCondition(condition) {
+    try {
+      return await User.findOne(condition).exec();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async createUser(dataForCreateUser) {
     const user = new User(dataForCreateUser);
     try {

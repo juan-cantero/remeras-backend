@@ -1,10 +1,14 @@
 import mercadopago from 'mercadopago';
 import dotenv from 'dotenv';
 import passErrorToHandler from '../utils/errors.js';
+import OrderService from '../services/OrderService.js';
+import Axios from 'axios';
 dotenv.config();
 mercadopago.configure({
   access_token: process.env.MP_DEV_TOKEN,
 });
+
+const orderService = new OrderService();
 
 class MercadoPagoController {
   async mercadopagoRequest(req, res, next) {
@@ -14,7 +18,7 @@ class MercadoPagoController {
       items: items,
       external_reference: order_id,
       auto_return: 'approved',
-      // notification_url: 'http://192.168.0.104:3000/notification',
+      notification_url: 'https://r-emeras.herokuapp.com/',
       marketplace: 'Remeras',
       back_urls: {
         failure: 'http://192.168.0.104:3000/failure',
@@ -36,8 +40,20 @@ class MercadoPagoController {
   async notificationPaymentReceived(req, res, next) {
     const id = req.query.id;
     const topic = req.query.topic;
-    console.log(id);
-    res.status(200).json({ id, topic });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.MP_DEV_TOKEN}`,
+      },
+    };
+    const { data } = await Axios.get(
+      `https://api.mercadopago.com/v1/payments/${id}`,
+      config
+    );
+
+    const { status, date_approved } = data;
+
+    res.status(200).json({ status, date_approved });
   }
 }
 

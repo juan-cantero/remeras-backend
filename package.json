@@ -16,6 +16,7 @@
     "@types/jest": "^26.0.15",
     "awilix": "^4.2.7",
     "aws-sdk": "^2.795.0",
+    "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
@@ -26,6 +27,7 @@
     "lodash": "^4.17.20",
     "mercadopago": "^1.5.0",
     "mongoose": "^5.10.12",
+    "nodemailer": "^6.4.16",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
