@@ -8,7 +8,7 @@ router.post('/mercadopago', verifyToken, (req, res, next) => {
   new MercadoPagoController().mercadopagoRequest(req, res, next);
 });
 
-router.post('./mercadopago', (req, res, next) => {
+router.post('/mercadopago', (req, res, next) => {
   new MercadoPagoController().notificationPaymentReceived(req, res, next);
 });
 

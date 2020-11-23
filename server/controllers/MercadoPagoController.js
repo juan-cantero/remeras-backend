@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import passErrorToHandler from '../utils/errors.js';
 import OrderService from '../services/OrderService.js';
 import Axios from 'axios';
+import Order from '../models/OrderModel.js';
 dotenv.config();
 mercadopago.configure({
   access_token: process.env.MP_DEV_TOKEN,
@@ -18,7 +19,7 @@ class MercadoPagoController {
       items: items,
       external_reference: order_id,
       auto_return: 'approved',
-      notification_url: 'https://r-emeras.herokuapp.com/',
+      notification_url: 'https://r-emeras.herokuapp.com/mercadopago',
       marketplace: 'Remeras',
       back_urls: {
         failure: 'http://192.168.0.104:3000/failure',
@@ -46,12 +47,20 @@ class MercadoPagoController {
         Authorization: `Bearer ${process.env.MP_DEV_TOKEN}`,
       },
     };
-    const { data } = await Axios.get(
-      `https://api.mercadopago.com/v1/payments/${id}`,
-      config
-    );
+    try {
+      const { data } = await Axios.get(
+        `https://api.mercadopago.com/v1/payments/${id}`,
+        config
+      );
+      const { external_reference, date_approved } = data;
+      const order = await Order.findById(external_reference);
+      order.isPaid = true;
+      order.paidAt = date_approved;
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
 
-    res.status(200).json({ data });
+    res.status(200);
   }
 }
 
