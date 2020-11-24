@@ -2,11 +2,13 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 const transport = nodemailer.createTransport({
-  service: 'Gmail',
-  host: 'smtp.gmail.com',
+  service: 'mailjet',
+
+  host: 'in-v3.mailjet.com',
+  port: 587,
   auth: {
-    user: process.env.GOOGLE_MAIL,
-    pass: process.env.GOOGLE_PASSWORD,
+    user: process.env.JET_MAIL_USER,
+    pass: process.env.JET_MAIL_PASSWORD,
   },
 });
 

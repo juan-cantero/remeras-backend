@@ -19,7 +19,7 @@ class MercadoPagoController {
       items: items,
       external_reference: order_id,
       auto_return: 'approved',
-      notification_url: 'https://r-emeras.herokuapp.com/mercadopago',
+      notification_url: 'https://r-emeras.herokuapp.com/api/notification',
       marketplace: 'Remeras',
       back_urls: {
         failure: 'http://192.168.0.104:3000/failure',

@@ -67,7 +67,7 @@ class UserController {
       user.resetLink = token;
       const updatedUser = await user.save();
       const info = await MailService.sendmail({
-        from: 'juanqui.cantero1989@gmail.com',
+        from: 'juan.cantero@outlook.com',
         to: `${email}`,
         subject: 'Ingresa en el link para resetear tu password',
         html: `
