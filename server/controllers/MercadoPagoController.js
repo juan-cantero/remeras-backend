@@ -36,7 +36,7 @@ class MercadoPagoController {
   }
 
   //@description receive marcadopago notification of payment
-  //@route POST /api/mercadopago/notification
+  //@route POST /api/notification
   //@access public
   async notificationPaymentReceived(req, res, next) {
     const id = req.query.id;
@@ -52,10 +52,14 @@ class MercadoPagoController {
         `https://api.mercadopago.com/v1/payments/${id}`,
         config
       );
-      const { external_reference, date_approved } = data;
-      const order = await Order.findById(external_reference);
-      order.isPaid = true;
-      order.paidAt = date_approved;
+      if (data) {
+        const { external_reference, date_approved } = data;
+        const order = await Order.findById(external_reference);
+        order.isPaid = true;
+        order.paidAt = date_approved;
+        await order.save();
+      }
+      res.status(200).send('ok');
     } catch (error) {
       passErrorToHandler(error, next);
     }

@@ -2,7 +2,9 @@ import Order from '../models/OrderModel.js';
 class OrderService {
   async getOrderById(id) {
     try {
-      const order = await Order.findById(id).populate('user', 'name', 'email');
+      const order = await Order.findById(id)
+        .populate('user', 'name', 'email')
+        .exec();
 
       return order;
     } catch (error) {
