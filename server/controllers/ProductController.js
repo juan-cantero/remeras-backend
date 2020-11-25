@@ -10,10 +10,28 @@ class ProductController {
   //@description get list of products
   //@ROUTE GET /api/product/list
   //@access public
-  async getProducts(req, res) {
-    const products = await this.productService.getProducts();
+  async getProducts(req, res, next) {
+    const pageSize = 20;
+    const page = Number(req.query.page) || 1;
+    const keyword = req.query.keyword;
+    const query = keyword
+      ? {
+          name: { $regex: keyword, $options: 'i' },
+        }
+      : {};
 
-    res.json(products);
+    try {
+      const count = await this.productService.getProductsCount(query);
+      const products = await this.productService.getProducts(
+        query,
+        pageSize,
+        page
+      );
+
+      res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    } catch (error) {
+      passErrorToHandler(error, next);
+    }
   }
 
   //@description get a product
@@ -33,6 +51,38 @@ class ProductController {
       res.status(200).json({ product });
     } catch (err) {
       passErrorToHandler(err, next);
+    }
+  }
+
+  //@Description get product filtered by genre
+  //@route GET /api/product/list/:genre
+  //@access public
+  async getProductsByGenre(req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.json(errors);
+    }
+    const pageSize = 20;
+    const page = Number(req.query.page) || 1;
+    const genre = req.params.genre;
+    const query = genre !== '' ? { forGenre: genre } : {};
+
+    try {
+      const count = await this.productService.getProductsCount(query);
+      const products = await this.productService.getProducts(
+        query,
+        pageSize,
+        page
+      );
+      if (!products) {
+        const error = new Error('Not products found');
+        error.statusCode = 400;
+        throw error;
+      }
+      res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    } catch (error) {
+      passErrorToHandler(error, next);
     }
   }
 

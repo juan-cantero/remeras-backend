@@ -5,9 +5,14 @@ import validateIdParam from '../validations/idValiation.js';
 
 const router = express.Router();
 
-router.get('/list', (req, res) => {
-  container.cradle.productController.getProducts(req, res);
+router.get('/list/:genre', (req, res, next) => {
+  container.cradle.productController.getProductsByGenre(req, res, next);
 });
+
+router.get('/list', (req, res, next) => {
+  container.cradle.productController.getProducts(req, res, next);
+});
+
 router.get('/:id', validateIdParam, (req, res, next) => {
   container.cradle.productController.getProduct(req, res, next);
 });

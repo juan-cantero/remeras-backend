@@ -1,14 +1,23 @@
 import Product from '../models/ProductModel.js';
 
 class ProductService {
-  async getProducts() {
+  async getProducts(query, pageSize, page) {
     try {
-      const products = await Product.find().exec();
+      const products = await Product.find({ ...query })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .exec();
       if (!products) return null;
       return products;
     } catch (error) {
       throw error;
     }
+  }
+
+  async getProductsCount(query) {
+    try {
+      return await Product.countDocuments({ ...query }).exec();
+    } catch (error) {}
   }
 
   async getProduct(id) {
