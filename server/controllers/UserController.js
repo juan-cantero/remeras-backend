@@ -71,7 +71,8 @@ class UserController {
         to: `${email}`,
         subject: 'Ingresa en el link para resetear tu password',
         html: `
-        <a href="http://localhost:3000/api/user/resetpassword">resetea tu password</a>
+        <a href="http://localhost:3000/login/newpassword/${token}">resetea tu password</a>
+        http://localhost:3000/login/newpassword/${token}
         `,
       });
       res.status(200).json({ message: 'El email fue enviado', info });
@@ -95,10 +96,10 @@ class UserController {
         error.statusCode = 401;
         throw error;
       }
-      user.password = newPassword;
+      const encryptedPassword = await encryptPassword(newPassword);
+      user.password = encryptedPassword;
       user.resetLink = '';
       const savedUser = await user.save();
-      console.log(savedUser);
       res.status(200).json({ message: 'your password has been changed' });
     } catch (error) {
       passErrorToHandler(error, next);

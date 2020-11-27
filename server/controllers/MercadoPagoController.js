@@ -20,11 +20,17 @@ class MercadoPagoController {
       external_reference: order_id,
       auto_return: 'approved',
       notification_url: 'https://r-emeras.herokuapp.com/api/notification',
-      marketplace: 'Remeras',
       back_urls: {
         failure: 'http://192.168.0.104:3000/failure',
-        pending: 'http://192.168.0.104:3000/pending',
-        success: 'http://192.168.0.104:3000/success',
+        success: `http://192.168.0.104:3000/success`,
+      },
+      payment_methods: {
+        excluded_payment_types: [
+          {
+            id: 'ticket',
+          },
+        ],
+        installments: 12,
       },
     };
     try {
