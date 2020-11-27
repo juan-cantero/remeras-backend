@@ -11,6 +11,11 @@ import User from '../models/UserModel.js';
 import MailService from '../services/MailService.js';
 dotenv.config();
 
+const front_url =
+  process.env.NODE_ENV === 'development'
+    ? 'http:localhost:3000'
+    : process.env.FRONT_URL;
+
 class UserController {
   /**
    *
@@ -71,8 +76,8 @@ class UserController {
         to: `${email}`,
         subject: 'Ingresa en el link para resetear tu password',
         html: `
-        <a href="http://localhost:3000/login/newpassword/${token}">resetea tu password</a>
-        http://localhost:3000/login/newpassword/${token}
+        
+        ${front_url}/login/newpassword/${token}
         `,
       });
       res.status(200).json({ message: 'El email fue enviado', info });

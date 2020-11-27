@@ -9,6 +9,11 @@ mercadopago.configure({
   access_token: process.env.MP_DEV_TOKEN,
 });
 
+const front_url =
+  process.env.NODE_ENV === 'development'
+    ? 'http:localhost:3000'
+    : process.env.FRONT_URL;
+
 const orderService = new OrderService();
 
 class MercadoPagoController {
@@ -21,8 +26,8 @@ class MercadoPagoController {
       auto_return: 'approved',
       notification_url: 'https://r-emeras.herokuapp.com/api/notification',
       back_urls: {
-        failure: 'http://192.168.0.104:3000/failure',
-        success: `http://192.168.0.104:3000/success`,
+        failure: `${front_url}/failure`,
+        success: `${front_url}/success`,
       },
       payment_methods: {
         excluded_payment_types: [
@@ -60,6 +65,15 @@ class MercadoPagoController {
       );
       if (data) {
         const { external_reference, date_approved } = data;
+        const info = await MailService.sendmail({
+          from: 'juan.cantero@outlook.com',
+          to: 'juanqui.cantero1989@gmail.com',
+          subject: 'Ingresa en el link para resetear tu password',
+          html: `
+          <h1>El pago fue hecho correctamente</h1>
+          <p>${date_approved}</p>
+        `,
+        });
         const order = await Order.findById(external_reference);
         order.isPaid = true;
         order.paidAt = date_approved;
