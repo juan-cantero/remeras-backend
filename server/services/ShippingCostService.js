@@ -19,6 +19,14 @@ class ShippingCostService {
     }
   }
 
+  async findShippingCostById(id) {
+    try {
+      return await ShippingCost.findById(id).exec();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async findShippingCostByLocality(locality) {
     try {
       return await ShippingCost.findOne({ locality });
