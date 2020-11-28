@@ -24,7 +24,7 @@ class MercadoPagoController {
       notification_url: 'https://r-emeras.herokuapp.com/api/notification',
       back_urls: {
         failure: `${front_url}/failure`,
-        success: `${front_url}/success`,
+        success: `/success`,
       },
       payment_methods: {
         excluded_payment_types: [

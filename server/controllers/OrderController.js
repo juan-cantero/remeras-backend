@@ -96,7 +96,6 @@ class OrderController {
       if (order) {
         order.isPaid = true;
         order.paidAt = Date.now();
-        order.paymentResult = req.body.paymentResult;
         const updatedOrder = await order.save();
         res.status(200).json(updatedOrder);
       }
