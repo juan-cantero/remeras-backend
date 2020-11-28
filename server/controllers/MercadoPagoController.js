@@ -9,10 +9,7 @@ mercadopago.configure({
   access_token: process.env.MP_DEV_TOKEN,
 });
 
-const front_url =
-  process.env.NODE_ENV === 'development'
-    ? 'http:localhost:3000'
-    : process.env.FRONT_URL;
+const front_url = process.env.FRONT_URL;
 
 const orderService = new OrderService();
 
